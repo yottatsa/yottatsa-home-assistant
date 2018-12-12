@@ -18,6 +18,7 @@ Devices:
     - sensor.processor_use
     - switch.hdmi_0
     - switch.heater
+    - sensor.heater
     - sensor.heater_wifi_signal_sensor
     - sensor.brightbox2_kbytesec_received
     - sensor.brightbox2_kbytesec_sent
@@ -26,3 +27,8 @@ Predictions:
     - sensor.dark_sky_minutely_summary
     - sensor.home_to_facebook_london
     - sensor.home_to_lsbu
+Presence:
+  entities:
+    - device_tracker.vladimir_eremins_iphone
+    - sensor.vladimir_eremins_iphone
+    - sensor.keenetics

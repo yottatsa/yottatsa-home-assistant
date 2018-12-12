@@ -61,6 +61,8 @@ recorder:
     entities:
       - sensor.dark_sky_temperature
       - sensor.dark_sky_humidity
+      - sensor.living_room_temperature
+      - sensor.living_room_temperature_filtered
       - sensor.living_room_humidity
       - sensor.bedroom_temperature
       - sensor.bedroom_light_level
@@ -73,11 +75,14 @@ recorder:
       - sensor.processor_use
       - sensor.home_to_facebook_london
       - sensor.home_to_lsbu
-      - sensor.heater_wifi_signal_sensor
       - sensor.brightbox2_kbytesec_received
       - sensor.brightbox2_kbytesec_sent
       - sensor.keenetics
       - sensor.vladimir_eremins_iphone
+      - device_tracker.vladimir_eremins_iphone
+      - sensor.heater
+      - sensor.heater_wifi_signal_sensor
+      - switch.heater
 
 history:
 
@@ -109,6 +114,13 @@ sensor:
       - temperature
       - humidity
     temperature_offset: -1.05
+  - platform: filter
+    name: living_room_temperature_filtered
+    entity_id: sensor.living_room_temperature
+    filters:
+      - filter: outlier
+        window_size: 4
+        radius: 2.0
   - platform: hue
     ip_address: 192.168.1.5
     token: !secret token
@@ -159,6 +171,13 @@ sensor:
       - temperature
       - humidity
       - minutely_summary
+  - platform: history_stats
+    name: Heater
+    entity_id: switch.heater
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
 
 nipca:
 
@@ -203,17 +222,18 @@ climate:
   - platform: generic_thermostat
     name: Heater
     heater: switch.heater
-    target_sensor: sensor.living_room_temperature
+    target_sensor: sensor.living_room_temperature_filtered
     min_temp: 15
     max_temp: 25
     ac_mode: False
-    target_temp: 21
+    target_temp: 20.5
     min_cycle_duration: 
       minutes: 30
-    cold_tolerance: 5
-    hot_tolerance: 5
+    cold_tolerance: 0.3
+    hot_tolerance: 0.2
+    precision: 0.1
     initial_operation_mode: auto
-    away_temp: 19
+    away_temp: 19.5
 
 hdmi_cec:
   osd_name: Apple TV
