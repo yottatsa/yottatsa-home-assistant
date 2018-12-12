@@ -2,7 +2,7 @@ Home:
   entities:
     - sensor.dark_sky_temperature
     - sensor.dark_sky_humidity
-    - sensor.living_room_temperature
+    - sensor.living_room_temperature_filtered
     - sensor.living_room_humidity
     - sensor.bedroom_temperature
     - sensor.bedroom_light_level
@@ -16,8 +16,6 @@ Devices:
     - sensor.disk_use_percent_
     - sensor.memory_use_percent
     - sensor.processor_use
-    - switch.hdmi_0
-    - switch.heater
     - sensor.heater
     - sensor.heater_wifi_signal_sensor
     - sensor.brightbox2_kbytesec_received
@@ -32,3 +30,7 @@ Presence:
     - device_tracker.vladimir_eremins_iphone
     - sensor.vladimir_eremins_iphone
     - sensor.keenetics
+Controls:
+  entities:
+    - switch.hdmi_0
+    - switch.heater
