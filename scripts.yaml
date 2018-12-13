@@ -1,0 +1,8 @@
+switch_on_apple_tv:
+  alias: Switch on the Apple TV
+  sequence:
+  - data: {}
+    service: hdmi_cec.power_on
+  - data:
+      raw: 4F:82:10:00
+    service: hdmi_cec.send_command

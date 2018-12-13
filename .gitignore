@@ -3,12 +3,10 @@
 .ios.conf
 .storage/
 .uuid
-automations.yaml
 customize.yaml
 heater/
 home-assistant.log
 known_devices.yaml
-scripts.yaml
 www/
 __pycache__
 *.swp

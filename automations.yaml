@@ -1,0 +1,90 @@
+- id: switch_on_apple_tv
+  alias: Switch on the AppleTV
+  trigger:
+  - entity_id: media_player.apple_tv
+    platform: state
+    to: playing
+  condition: []
+  action:
+  - service: script.switch_on_apple_tv
+- id: '1544058608572'
+  alias: Go to sleep
+  trigger:
+  - at: 0:30:00
+    platform: time
+  condition: []
+  action:
+  - data:
+      away_mode: true
+      entity_id: climate.heater
+    service: climate.set_away_mode
+  - data:
+      entity_id: climate.heater
+      temperature: 19.5
+    service: climate.set_temperature
+- id: '1544058656379'
+  alias: Wake up
+  trigger:
+  - at: 08:00:00
+    platform: time
+  condition: []
+  action:
+  - data:
+      away_mode: false
+      entity_id: climate.heater
+    service: climate.set_away_mode
+  - data:
+      entity_id: climate.heater
+      temperature: 20.5
+    service: climate.set_temperature
+- id: '1544639167076'
+  alias: Leaving home
+  trigger:
+  - entity_id: sensor.vladimir_eremins_iphone
+    from: 'on'
+    platform: state
+    to: 'off'
+  - entity_id: sensor.keenetics
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: sensor.vladimir_eremins_iphone
+    state: 'off'
+  - condition: state
+    entity_id: sensor.keenetics
+    state: 'off'
+  action:
+  - data:
+      away_mode: true
+      entity_id: climate.heater
+    service: climate.set_away_mode
+  - data:
+      entity_id: climate.heater
+      temperature: 19.5
+    service: climate.set_temperature
+- id: '1544645154540'
+  alias: Coming home
+  trigger:
+  - entity_id: sensor.keenetics
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: sensor.vladimir_eremins_iphone
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - after: 08:00:00
+    before: 0:30:00
+    condition: time
+  action:
+  - data:
+      away_mode: false
+      entity_id: climate.heater
+    service: climate.set_away_mode
+  - data:
+      entity_id: climate.heater
+      temperature: 20.5
+    service: climate.set_temperature
