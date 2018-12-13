@@ -2,6 +2,7 @@ Home:
   entities:
     - sensor.dark_sky_temperature
     - sensor.dark_sky_humidity
+    - sensor.temperature
     - sensor.living_room_temperature_filtered
     - sensor.living_room_humidity
     - sensor.bedroom_temperature
@@ -32,5 +33,5 @@ Presence:
     - sensor.keenetics
 Controls:
   entities:
-    - switch.hdmi_0
+    - switch.tv
     - switch.heater
