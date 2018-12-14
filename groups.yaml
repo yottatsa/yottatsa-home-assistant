@@ -2,25 +2,24 @@ Home:
   entities:
     - sensor.dark_sky_temperature
     - sensor.dark_sky_humidity
-    - sensor.temperature
     - sensor.living_room_temperature_filtered
     - sensor.living_room_humidity
     - sensor.bedroom_temperature
     - sensor.bedroom_light_level
     - sensor.bedroom_motion_sensor
+    - sensor.heater
     - binary_sensor.livingroom_motion_sensor
 Devices:
   entities:
-    - sensor.hp_laserjet_professional_m1212nf_mfp
-    - sensor.printed_pages
     - sensor.cpu_thermal_zone_0
     - sensor.disk_use_percent_
     - sensor.memory_use_percent
     - sensor.processor_use
-    - sensor.heater
     - sensor.heater_wifi_signal_sensor
     - sensor.brightbox2_kbytesec_received
     - sensor.brightbox2_kbytesec_sent
+    - sensor.hp_laserjet_professional_m1212nf_mfp
+    - sensor.printed_pages
 Predictions:
   entities:
     - sensor.dark_sky_minutely_summary

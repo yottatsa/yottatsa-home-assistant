@@ -20,12 +20,12 @@
     service: climate.set_away_mode
   - data:
       entity_id: climate.heater
-      temperature: 19.5
+      temperature: 20
     service: climate.set_temperature
 - id: '1544058656379'
   alias: Wake up
   trigger:
-  - at: 08:00:00
+  - at: '9:00:00'
     platform: time
   condition: []
   action:
@@ -35,26 +35,16 @@
     service: climate.set_away_mode
   - data:
       entity_id: climate.heater
-      temperature: 20.5
+      temperature: 21
     service: climate.set_temperature
 - id: '1544639167076'
   alias: Leaving home
   trigger:
-  - entity_id: sensor.vladimir_eremins_iphone
+  - entity_id: group.presence
     from: 'on'
     platform: state
     to: 'off'
-  - entity_id: sensor.keenetics
-    from: 'on'
-    platform: state
-    to: 'off'
-  condition:
-  - condition: state
-    entity_id: sensor.vladimir_eremins_iphone
-    state: 'off'
-  - condition: state
-    entity_id: sensor.keenetics
-    state: 'off'
+  condition: []
   action:
   - data:
       away_mode: true
@@ -62,16 +52,15 @@
     service: climate.set_away_mode
   - data:
       entity_id: climate.heater
-      temperature: 19.5
+      temperature: 20
     service: climate.set_temperature
+  - data:
+      message: Itterasshai!
+    service: notify.ios_vladimir_eremins_iphone
 - id: '1544645154540'
   alias: Coming home
   trigger:
-  - entity_id: sensor.keenetics
-    from: 'off'
-    platform: state
-    to: 'on'
-  - entity_id: sensor.vladimir_eremins_iphone
+  - entity_id: group.presence
     from: 'off'
     platform: state
     to: 'on'
@@ -86,5 +75,8 @@
     service: climate.set_away_mode
   - data:
       entity_id: climate.heater
-      temperature: 20.5
+      temperature: 21
     service: climate.set_temperature
+  - data:
+      message: Okaeri!
+    service: notify.ios_vladimir_eremins_iphone

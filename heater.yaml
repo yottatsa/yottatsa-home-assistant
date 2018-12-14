@@ -19,7 +19,7 @@ wifi:
     dns2: 192.168.1.1
 
 mqtt:
-  broker: !secret mosquitto_host
+  broker: "home.yottatsa.name"
   port: 8883
   username: homeassistant
   password: !secret mosquitto
