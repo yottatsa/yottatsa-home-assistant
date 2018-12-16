@@ -25,6 +25,7 @@ Predictions:
     - sensor.dark_sky_minutely_summary
     - sensor.home_to_facebook_london
     - sensor.home_to_lsbu
+    - binary_sensor.workday_sensor
 Presence:
   entities:
     - device_tracker.vladimir_eremins_iphone

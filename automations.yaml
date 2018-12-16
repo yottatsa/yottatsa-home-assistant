@@ -8,11 +8,14 @@
   action:
   - service: script.switch_on_apple_tv
 - id: '1544058608572'
-  alias: Go to sleep
+  alias: Go to sleep on weekdays
   trigger:
-  - at: 0:30:00
+  - at: 00:30:00
     platform: time
-  condition: []
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
   action:
   - data:
       away_mode: true
@@ -23,11 +26,14 @@
       temperature: 20
     service: climate.set_temperature
 - id: '1544058656379'
-  alias: Wake up
+  alias: Wake up on weekdays
   trigger:
-  - at: '9:00:00'
+  - at: '8:00:00'
     platform: time
-  condition: []
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
   action:
   - data:
       away_mode: false
@@ -80,3 +86,21 @@
   - data:
       message: Okaeri!
     service: notify.ios_vladimir_eremins_iphone
+- id: '1544922225207'
+  alias: Wake up on weekends
+  trigger:
+  - at: '10:00:00'
+    platform: time
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'off'
+  action:
+  - data:
+      away_mode: false
+      entity_id: climate.heater
+    service: climate.set_away_mode
+  - data:
+      entity_id: climate.heater
+      temperature: 21
+    service: climate.set_temperature

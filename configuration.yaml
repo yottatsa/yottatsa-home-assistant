@@ -185,6 +185,11 @@ sensor:
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
 
+binary_sensor:
+  - platform: workday
+    country: UK
+    workdays: [mon, tue, wed, thu, fri]
+
 switch:
   - platform: template
     switches:
