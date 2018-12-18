@@ -4,5 +4,25 @@ switch_on_apple_tv:
   - data: {}
     service: hdmi_cec.power_on
   - data:
-      raw: 4F:82:10:00
-    service: hdmi_cec.send_command
+      device: 1.0.0.0
+    service: hdmi_cec.select_device
+  - delay: 00:00:01
+  - data:
+      device: 1.0.0.0
+    service: hdmi_cec.select_device
+  - delay: 00:00:01
+  - data:
+      device: 1.0.0.0
+    service: hdmi_cec.select_device
+  - delay: 00:00:01
+  - data:
+      device: 1.0.0.0
+    service: hdmi_cec.select_device
+  - delay: 00:00:01
+  - data:
+      device: 1.0.0.0
+    service: hdmi_cec.select_device
+  - delay: 00:00:01
+  - data:
+      device: 1.0.0.0
+    service: hdmi_cec.select_device
