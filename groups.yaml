@@ -12,7 +12,7 @@ Home:
 Devices:
   entities:
     - sensor.cpu_thermal_zone_0
-    - sensor.disk_use_percent_
+    - sensor.disk_use_percent
     - sensor.memory_use_percent
     - sensor.processor_use
     - sensor.heater_wifi_signal_sensor
@@ -30,7 +30,7 @@ Presence:
   entities:
     - device_tracker.vladimir_eremins_iphone
     - sensor.vladimir_eremins_iphone
-    - sensor.keenetics
+    - sensor.keenetic_s
 Controls:
   entities:
     - switch.tv

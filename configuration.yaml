@@ -9,7 +9,7 @@ homeassistant:
   # metric for Metric, imperial for Imperial
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: UTC
+  time_zone: Europe/London
   # Customization file
   customize: !include customize.yaml
   auth_providers:
@@ -257,11 +257,11 @@ climate:
     away_temp: 20
 
 hdmi_cec:
-  osd_name: Pi
+  osd_name: raspberry
   devices:
     Philips TV: 0.0.0.0
     Apple TV: 1.0.0.0
-    Pi: 2.0.0.0
+    raspberry: 2.0.0.0
 
 group: !include groups.yaml
 automation: !include automations.yaml
