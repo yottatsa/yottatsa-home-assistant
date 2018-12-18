@@ -10,3 +10,4 @@ known_devices.yaml
 www/
 __pycache__
 *.swp
+secrets.yaml
