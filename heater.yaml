@@ -18,6 +18,25 @@ wifi:
     dns1: 192.168.1.110
     dns2: 192.168.1.1
 
+ota:
+  password: !secret ota
+
+logger:
+  baud_rate: 115200
+
+switch:
+  - platform: gpio
+    id: heater
+    name: Heater
+    pin:
+      number: GPIO0
+      inverted: True
+
+#time:
+#  - platform: sntp
+#    id: sntp_time
+#    timezone: Europe/London
+
 mqtt:
   broker: "home.yottatsa.name"
   port: 8883
@@ -25,25 +44,10 @@ mqtt:
   password: !secret mosquitto
   ssl_fingerprints: !secret mosquitto_ssl
 
-logger:
-  baud_rate: 115200
-
-ota:
-  password: !secret ota
-
 status_led:
   pin:
     number: GPIO2
     inverted: True
-
-switch:
-  - platform: gpio
-    id: heater
-    icon: "mdi:temperature-celsius"
-    name: Heater
-    pin:
-      number: GPIO0
-      inverted: True
 
 sensor:
   - platform: wifi_signal
