@@ -15,8 +15,8 @@ wifi:
     static_ip: 192.168.1.237
     subnet: 255.255.255.0
     gateway: 192.168.1.1
-    dns1: 192.168.1.110
-    dns2: 192.168.1.1
+    dns1: 192.168.1.1
+    dns2: 8.8.8.8
 
 ota:
   password: !secret ota
@@ -28,21 +28,21 @@ switch:
   - platform: gpio
     id: heater
     name: Heater
+    icon: "mdi:temperature-celsius"
     pin:
       number: GPIO0
       inverted: True
 
-#time:
-#  - platform: sntp
-#    id: sntp_time
-#    timezone: Europe/London
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: Europe/London
 
 mqtt:
-  broker: "home.yottatsa.name"
-  port: 8883
+  broker: 192.168.1.110
+  port: 1883
   username: homeassistant
   password: !secret mosquitto
-  ssl_fingerprints: !secret mosquitto_ssl
 
 status_led:
   pin:
