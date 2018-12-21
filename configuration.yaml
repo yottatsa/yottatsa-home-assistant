@@ -58,6 +58,7 @@ recorder:
   include:
     domains:
       - climate
+      - device_tracker
     entities:
       - sensor.dark_sky_temperature
       - sensor.dark_sky_humidity
@@ -70,15 +71,14 @@ recorder:
       - binary_sensor.livingroom_motion_sensor
       - sensor.printed_pages
       - sensor.cpu_thermal_zone_0
-      - sensor.disk_use_percent_
+      - sensor.disk_use_percent
       - sensor.memory_use_percent
       - sensor.processor_use
       - sensor.home_to_facebook_london
       - sensor.home_to_lsbu
       - sensor.brightbox2_kbytesec_received
       - sensor.brightbox2_kbytesec_sent
-      - device_tracker.vladimir_eremins_iphone
-      - sensor.keenetics
+      - sensor.keenetic_s
       - sensor.vladimir_eremins_iphone
       - sensor.heater
       - sensor.heater_wifi_signal_sensor
