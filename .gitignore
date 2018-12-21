@@ -6,7 +6,6 @@
 customize.yaml
 heater/
 home-assistant.log
-known_devices.yaml
 www/
 __pycache__
 *.swp

@@ -1,4 +1,6 @@
 Home:
+  control: hidden
+  icon: mdi:home
   entities:
     - sensor.dark_sky_temperature
     - sensor.dark_sky_humidity
@@ -10,6 +12,7 @@ Home:
     - sensor.heater
     - binary_sensor.livingroom_motion_sensor
 Devices:
+  control: hidden
   entities:
     - sensor.cpu_thermal_zone_0
     - sensor.disk_use_percent
@@ -21,17 +24,20 @@ Devices:
     - sensor.hp_laserjet_professional_m1212nf_mfp
     - sensor.printed_pages
 Predictions:
+  control: hidden
   entities:
     - sensor.dark_sky_minutely_summary
     - sensor.home_to_facebook_london
     - sensor.home_to_lsbu
     - binary_sensor.workday_sensor
 Presence:
+  control: hidden
+  icon: mdi:account-multiple
   entities:
     - device_tracker.vladimir_eremins_iphone
-    - sensor.vladimir_eremins_iphone
-    - sensor.keenetic_s
+    - device_tracker.keenetic_s
 Controls:
   entities:
-    - switch.tv
+    - climate.heater
     - switch.heater
+    - switch.tv

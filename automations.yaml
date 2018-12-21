@@ -47,10 +47,13 @@
   alias: Leaving home
   trigger:
   - entity_id: group.presence
-    from: 'on'
+    from: home
     platform: state
-    to: 'off'
-  condition: []
+    to: not_home
+  condition:
+  - after: 08:00:00
+    before: 00:30:00
+    condition: time
   action:
   - data:
       away_mode: true
@@ -67,9 +70,9 @@
   alias: Coming home
   trigger:
   - entity_id: group.presence
-    from: 'off'
+    from: not_home
     platform: state
-    to: 'on'
+    to: home
   condition:
   - after: 08:00:00
     before: 0:30:00

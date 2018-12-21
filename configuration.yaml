@@ -78,8 +78,6 @@ recorder:
       - sensor.home_to_lsbu
       - sensor.brightbox2_kbytesec_received
       - sensor.brightbox2_kbytesec_sent
-      - sensor.keenetic_s
-      - sensor.vladimir_eremins_iphone
       - sensor.heater
       - sensor.heater_wifi_signal_sensor
       - switch.heater
@@ -262,6 +260,12 @@ hdmi_cec:
     Philips TV: 0.0.0.0
     Apple TV: 1.0.0.0
     raspberry: 2.0.0.0
+
+device_tracker:
+  - platform: nmap_tracker
+    scan_options: " --privileged -sP "
+    hosts:
+      - 192.168.1.0/24
 
 group: !include groups.yaml
 automation: !include automations.yaml

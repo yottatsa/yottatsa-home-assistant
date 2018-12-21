@@ -1,0 +1,96 @@
+
+00_17_88_78_8e_28:
+  hide_if_away: false
+  icon:
+  mac: 00:17:88:78:8E:28
+  name: Philips Hue
+  picture:
+  track: false
+
+brightbox_ee:
+  hide_if_away: false
+  icon:
+  mac: 32:8D:36:2E:7B:E0
+  name: BrightBox.ee
+  picture:
+  track: false
+
+keenetic_s:
+  hide_if_away: false
+  icon:
+  mac: A0:D7:95:05:4A:A0
+  name: Keenetic-S
+  picture:
+  track: true
+
+70_af_24_03_bb_0f:
+  hide_if_away: false
+  icon:
+  mac: 70:AF:24:03:BB:0F
+  name: Philips TV
+  picture:
+  track: false
+
+8e_5d_4e_98_06_6c:
+  hide_if_away: false
+  icon:
+  mac: 8E:5D:4E:98:06:6C
+  name: ZyXEL
+  picture:
+  track: false
+
+6c_94_f8_e8_18_11:
+  hide_if_away: false
+  icon:
+  mac: 6C:94:F8:E8:18:11
+  name: Apple TV
+  picture:
+  track: false
+
+80_7d_3a_3e_e3_f3:
+  hide_if_away: false
+  icon:
+  mac: 80:7D:3A:3E:E3:F3
+  name: Heater
+  picture:
+  track: false
+
+b0_c5_54_07_ac_21:
+  hide_if_away: false
+  icon:
+  mac: B0:C5:54:07:AC:21
+  name: LivingRoom
+  picture:
+  track: false
+
+old_iphone:
+  hide_if_away: false
+  icon:
+  mac: 2C:BE:08:A7:46:3C
+  name: Old iPhone
+  picture:
+  track: true
+
+vladimir_eremins_iphone:
+  hide_if_away: false
+  icon:
+  mac: 48:BF:6B:3C:A1:26
+  name: vladimir eremins iphone
+  picture:
+  track: true
+
+yottatsa_fb:
+  hide_if_away: false
+  icon:
+  mac: 78:4F:43:9B:AC:7E
+  name: yottatsa-fb
+  picture:
+  track: true
+
+vladimirs_macbook_air:
+  hide_if_away: false
+  icon:
+  mac: 64:76:BA:8B:DF:F0
+  name: Vladimir's MacBook Air
+  picture:
+  track: true
