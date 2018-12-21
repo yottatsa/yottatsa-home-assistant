@@ -24,6 +24,18 @@ ota:
 logger:
   baud_rate: 115200
 
+status_led:
+  pin:
+    number: GPIO2
+    inverted: True
+
+output:
+  - platform: gpio
+    id: gpio_led
+    pin:
+      number: GPIO2
+      inverted: True
+
 switch:
   - platform: gpio
     id: heater
@@ -44,14 +56,14 @@ mqtt:
   username: homeassistant
   password: !secret mosquitto
 
-status_led:
-  pin:
-    number: GPIO2
-    inverted: True
-
 sensor:
   - platform: wifi_signal
     name: "Heater WiFi Signal Sensor"
+    on_value:
+      then:
+        - output.turn_on: gpio_led
+        - delay: 0.1s
+        - output.turn_off: gpio_led
     update_interval: 5s
     expire_after: 120s
     accuracy_decimals: 1
