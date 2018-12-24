@@ -15,14 +15,6 @@ brightbox_ee:
   picture:
   track: false
 
-keenetic_s:
-  hide_if_away: false
-  icon:
-  mac: A0:D7:95:05:4A:A0
-  name: Keenetic-S
-  picture:
-  track: true
-
 70_af_24_03_bb_0f:
   hide_if_away: false
   icon:
@@ -74,7 +66,6 @@ old_iphone:
 vladimir_eremins_iphone:
   hide_if_away: false
   icon:
-  mac: 48:BF:6B:3C:A1:26
   name: vladimir eremins iphone
   picture:
   track: true
@@ -92,5 +83,29 @@ vladimirs_macbook_air:
   icon:
   mac: 64:76:BA:8B:DF:F0
   name: Vladimir's MacBook Air
+  picture:
+  track: true
+
+f0_27_2d_b8_fc_0d:
+  hide_if_away: false
+  icon:
+  mac: F0:27:2D:B8:FC:0D
+  name: Kindle
+  picture:
+  track: true
+
+l_02_eoz2r:
+  hide_if_away: false
+  icon:
+  name: Keenetic-S
+  mac: A0:D7:95:05:4A:A0
+  picture:
+  track: true
+
+l_02_60heu:
+  hide_if_away: false
+  icon:
+  mac: 48:BF:6B:3C:A1:26
+  name: Vladimir Eremin’s iPhone
   picture:
   track: true
