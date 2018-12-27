@@ -1,4 +1,6 @@
 esphomeyaml:
+  esphomelib_version:
+    branch: dev
   name: heater
   platform: ESP8266
   board: esp01_1m
