@@ -1,12 +1,13 @@
 .HA_VERSION
 .homekit.state
 .ios.conf
-.storage/
+.storage
 .uuid
 customize.yaml
-heater/
+heater
 home-assistant.log
-www/
+www
+tts
 __pycache__
 *.swp
 secrets.yaml

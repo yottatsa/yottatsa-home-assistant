@@ -10,6 +10,7 @@ Home:
     - sensor.bedroom_light_level
     - sensor.bedroom_motion_sensor
     - sensor.heater
+    - timer.alarm_clock
     - binary_sensor.livingroom_motion_sensor
 Devices:
   control: hidden
@@ -19,8 +20,8 @@ Devices:
     - sensor.memory_use_percent
     - sensor.processor_use
     - sensor.heater_wifi_signal_sensor
-    - sensor.brightbox2_kbytesec_received
-    - sensor.brightbox2_kbytesec_sent
+    - sensor.brightbox2_kbyte_sec_received
+    - sensor.brightbox2_kbyte_sec_sent
     - sensor.hp_laserjet_professional_m1212nf_mfp
     - sensor.printed_pages
 Predictions:
@@ -35,10 +36,10 @@ Presence:
   icon: mdi:account-multiple
   entities:
     - device_tracker.vladimir_eremins_iphone
-    - device_tracker.l_02_60heu
-    - device_tracker.l_02_eoz2r
+    - device_tracker.keenetic_s
 Controls:
   entities:
     - climate.heater
     - switch.heater
+    - switch.alarm_clock
     - switch.tv

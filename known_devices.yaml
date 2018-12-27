@@ -66,8 +66,9 @@ old_iphone:
 vladimir_eremins_iphone:
   hide_if_away: false
   icon:
-  name: vladimir eremins iphone
-  picture:
+  name: Vladimir Eremin’s iPhone
+  gravatar: me@yottatsa.name
+  mac: 48:BF:6B:3C:A1:26
   track: true
 
 yottatsa_fb:
@@ -94,18 +95,10 @@ f0_27_2d_b8_fc_0d:
   picture:
   track: true
 
-l_02_eoz2r:
+keenetic_s:
   hide_if_away: false
   icon:
-  name: Keenetic-S
   mac: A0:D7:95:05:4A:A0
-  picture:
-  track: true
-
-l_02_60heu:
-  hide_if_away: false
-  icon:
-  mac: 48:BF:6B:3C:A1:26
-  name: Vladimir Eremin’s iPhone
+  name: Keenetic-S
   picture:
   track: true
