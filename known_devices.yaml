@@ -15,14 +15,6 @@ brightbox_ee:
   picture:
   track: false
 
-70_af_24_03_bb_0f:
-  hide_if_away: false
-  icon:
-  mac: 70:AF:24:03:BB:0F
-  name: Philips TV
-  picture:
-  track: false
-
 8e_5d_4e_98_06_6c:
   hide_if_away: false
   icon:
@@ -68,7 +60,6 @@ vladimir_eremins_iphone:
   icon:
   name: Vladimir Eremin’s iPhone
   gravatar: me@yottatsa.name
-  mac: 48:BF:6B:3C:A1:26
   track: true
 
 yottatsa_fb:
@@ -95,10 +86,27 @@ f0_27_2d_b8_fc_0d:
   picture:
   track: true
 
-keenetic_s:
+hue_vladimir_eremins_iphone:
+  hide_if_away: false
+  icon:
+  mac: 48:BF:6B:3C:A1:26
+  name: Vladimir Eremin’s iPhone
+  gravatar: me@yottatsa.name
+  picture:
+  track: true
+
+hue_keenetic_s:
   hide_if_away: false
   icon:
   mac: A0:D7:95:05:4A:A0
   name: Keenetic-S
   picture:
   track: true
+
+70_af_24_01_b2_84:
+  hide_if_away: false
+  icon:
+  mac: 70:AF:24:01:B2:84
+  name: Philips TV
+  picture:
+  track: false

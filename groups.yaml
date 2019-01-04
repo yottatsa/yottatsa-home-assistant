@@ -36,7 +36,7 @@ Presence:
   icon: mdi:account-multiple
   entities:
     - device_tracker.vladimir_eremins_iphone
-    - device_tracker.keenetic_s
+    - device_tracker.hue_keenetic_s
 Controls:
   entities:
     - climate.heater

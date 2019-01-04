@@ -23,16 +23,10 @@ zone:
     icon: mdi:facebook-workplace
     radius: 250
 
-# Show links to resources in log and frontend
-# introduction:
-
-# Enables the frontend
 frontend:
 
-# Enables configuration UI
 config:
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   base_url: https://home.yottatsa.name
   api_password: !secret http_password
@@ -48,7 +42,6 @@ http:
   # Optional, allows Home Assistant developers to focus on popular components.
   # include_used_components: true
 
-# Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
 recorder:
@@ -119,8 +112,6 @@ sensor:
         window_size: 4
         radius: 2.0
   - platform: hue
-    ip_address: 192.168.1.5
-    token: !secret token
   - platform: template
     sensors:
       bedroom_temperature:
@@ -138,8 +129,8 @@ sensor:
       temperature:
         friendly_name: 'Temperature'
         value_template: >
-          {{ states("sensor.living_room_temperature_filtered") | float * 0.7 +
-             states.sensor.bedroom_motion_sensor.attributes.temperature * 0.3 }}
+          {{ (states.sensor.living_room_temperature_filtered and states("sensor.living_room_temperature_filtered") or 21) | float * 0.7 +
+             (states.sensor.bedroom_motion_sensor and states.sensor.bedroom_motion_sensor.attributes.temperature or 22) * 0.3 }}
         unit_of_measurement: °C
   - platform: command_line
     name: CPU Thermal Zone 0
@@ -245,11 +236,13 @@ logger:
   default: warn
   logs:
     custom_components.device_tracker: debug
+    custom_components.sensor.hue: debug
+    urllib3: error
 
 apple_tv:
-#  - host: 192.168.1.246
-#    login_id: !secret pyatv_loginid
-#    credentials: !secret pyatv_credentials
+  - host: 192.168.1.246
+    login_id: !secret pyatv_loginid
+    credentials: !secret pyatv_credentials
 
 climate:
   - platform: generic_thermostat
@@ -271,7 +264,7 @@ hdmi_cec:
   devices:
     Philips TV: 0.0.0.0
     Apple TV: 1.0.0.0
-    raspberry: 2.0.0.0
+    Pi: 2.0.0.0
 
 device_tracker:
   - platform: nmap_tracker
@@ -283,13 +276,14 @@ device_tracker:
       - 192.168.1.0/24
   - platform: hue
     consider_home: 0:06:15
+    interval_seconds: 60
 
 proximity:
   home:
     zone: home
     devices:
       - device_tracker.vladimir_eremins_iphone
-      - device_tracker.keenetic_s
+      - device_tracker.hue_keenetic_s
     tolerance: 50
   facebook_london:
     zone: facebook_london

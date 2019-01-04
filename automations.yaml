@@ -53,7 +53,7 @@
   action:
   - data:
       entity_id: climate.heater
-      temperature: 20
+      temperature: 19
     service: climate.set_temperature
   - data:
       message: Itterasshai!
