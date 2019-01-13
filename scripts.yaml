@@ -6,23 +6,23 @@ switch_on_apple_tv:
   - data:
       device: 1.0.0.0
     service: hdmi_cec.select_device
-  - delay: 00:00:01
+  - delay: 00:00:02
   - data:
       device: 1.0.0.0
     service: hdmi_cec.select_device
-  - delay: 00:00:01
+  - delay: 00:00:02
   - data:
       device: 1.0.0.0
     service: hdmi_cec.select_device
-  - delay: 00:00:01
+  - delay: 00:00:02
   - data:
       device: 1.0.0.0
     service: hdmi_cec.select_device
-  - delay: 00:00:01
+  - delay: 00:00:02
   - data:
       device: 1.0.0.0
     service: hdmi_cec.select_device
-  - delay: 00:00:01
+  - delay: 00:00:02
   - data:
       device: 1.0.0.0
     service: hdmi_cec.select_device

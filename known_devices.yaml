@@ -86,10 +86,18 @@ f0_27_2d_b8_fc_0d:
   picture:
   track: true
 
-hue_vladimir_eremins_iphone:
+mac_vladimir_eremins_iphone:
   hide_if_away: false
   icon:
   mac: 48:BF:6B:3C:A1:26
+  name: Vladimir Eremin’s iPhone
+  gravatar: me@yottatsa.name
+  picture:
+  track: true
+
+hue_vladimir_eremins_iphone:
+  hide_if_away: false
+  icon:
   name: Vladimir Eremin’s iPhone
   gravatar: me@yottatsa.name
   picture:
@@ -108,5 +116,13 @@ hue_keenetic_s:
   icon:
   mac: 70:AF:24:01:B2:84
   name: Philips TV
+  picture:
+  track: false
+
+b8_27_eb_2b_1a_b3:
+  hide_if_away: false
+  icon:
+  mac: B8:27:EB:2B:1A:B3
+  name: Pi Wi-Fi
   picture:
   track: false

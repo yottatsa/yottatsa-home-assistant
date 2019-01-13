@@ -61,7 +61,7 @@ recorder:
       - sensor.living_room_humidity
       - sensor.bedroom_temperature
       - sensor.bedroom_light_level
-      - sensor.bedroom_motion_sensor
+      - binary_sensor.bedroom_motion_sensor
       - binary_sensor.livingroom_motion_sensor
       - sensor.printed_pages
       - sensor.cpu_thermal_zone_0
@@ -70,8 +70,6 @@ recorder:
       - sensor.processor_use
       - sensor.home_to_facebook_london
       - sensor.home_to_lsbu
-      - sensor.brightbox2_kbytesec_received
-      - sensor.brightbox2_kbytesec_sent
       - sensor.heater
       - sensor.heater_wifi_signal_sensor
       - switch.heater
@@ -92,6 +90,8 @@ mqtt:
   password: !secret mosquitto
 
 discovery:
+  ignore:
+    - igd
   enable:
 #    - dlna_dmr
 
@@ -111,26 +111,25 @@ sensor:
       - filter: outlier
         window_size: 4
         radius: 2.0
-  - platform: hue
   - platform: template
     sensors:
       bedroom_temperature:
         friendly_name: 'Bedroom Temperature'
-        value_template: '{{states.sensor.bedroom_motion_sensor.attributes.temperature}}'
+        value_template: "{{ state_attr('binary_sensor.bedroom_motion_sensor', 'temperature') }}"
         unit_of_measurement: °C
       bedroom_light_level:
         friendly_name: 'Bedroom light level'
-        value_template: '{{states.sensor.bedroom_motion_sensor.attributes.lx}}'
+        value_template: "{{ state_attr('binary_sensor.bedroom_motion_sensor', 'lx') }}"
         unit_of_measurement: lux
       printed_pages:
         friendly_name: 'Printed'
-        value_template: '{{states.sensor.hp_laserjet_professional_m1212nf_mfp.attributes.get("1.3.6.1.2.1.43.10.2.1.4.1.1") | int }}'
+        value_template: "{{ state_attr('sensor.hp_laserjet_professional_m1212nf_mfp', '1.3.6.1.2.1.43.10.2.1.4.1.1') | int }}"
         unit_of_measurement: pages
       temperature:
         friendly_name: 'Temperature'
         value_template: >
-          {{ (states.sensor.living_room_temperature_filtered and states("sensor.living_room_temperature_filtered") or 21) | float * 0.7 +
-             (states.sensor.bedroom_motion_sensor and states.sensor.bedroom_motion_sensor.attributes.temperature or 22) * 0.3 }}
+          {{ (states.sensor.living_room_temperature_filtered.state or 21) | float | multiply(0.7) +
+             (state_attr('binary_sensor.bedroom_motion_sensor', 'temperature') or 22) | float | multiply(0.3) }}
         unit_of_measurement: °C
   - platform: command_line
     name: CPU Thermal Zone 0
@@ -175,6 +174,7 @@ sensor:
     end: '{{ now() }}'
 
 binary_sensor:
+  - platform: hue
   - platform: workday
     country: UK
     workdays: [mon, tue, wed, thu, fri]
@@ -208,8 +208,6 @@ tts:
 
 # cloud:
 
-upnp:
-
 zeroconf:
 
 ios:
@@ -236,6 +234,7 @@ logger:
   default: warn
   logs:
     custom_components.device_tracker: debug
+    custom_components.binary_sensor.hue: debug
     custom_components.sensor.hue: debug
     urllib3: error
 
@@ -275,8 +274,8 @@ device_tracker:
     hosts:
       - 192.168.1.0/24
   - platform: hue
-    consider_home: 0:06:15
     interval_seconds: 60
+    consider_home: 0:06:15
 
 proximity:
   home:
