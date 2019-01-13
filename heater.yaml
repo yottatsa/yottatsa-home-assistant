@@ -4,10 +4,6 @@ esphomeyaml:
   name: heater
   platform: ESP8266
   board: esp01_1m
-  on_boot:
-    priority: 100
-    then:
-      - switch.turn_off: heater
 
 wifi:
   ssid: !secret ssid
@@ -43,6 +39,7 @@ switch:
     id: heater
     name: Heater
     icon: "mdi:temperature-celsius"
+    restore_mode: ALWAYS_OFF
     pin:
       number: GPIO0
       inverted: True
