@@ -1,7 +1,7 @@
 esphomeyaml:
   esphomelib_version:
     branch: dev
-  name: heater
+  name: climate
   platform: ESP8266
   board: esp01_1m
 
@@ -10,7 +10,7 @@ wifi:
   password: !secret wifi_password
   power_save_mode: none
   manual_ip:
-    static_ip: 192.168.1.238
+    static_ip: 192.168.1.237
     subnet: 255.255.255.0
     gateway: 192.168.1.1
     dns1: 192.168.1.1
@@ -21,28 +21,6 @@ ota:
 
 logger:
   baud_rate: 115200
-
-status_led:
-  pin:
-    number: GPIO2
-    inverted: True
-
-output:
-  - platform: gpio
-    id: gpio_led
-    pin:
-      number: GPIO2
-      inverted: True
-
-switch:
-  - platform: gpio
-    id: heater
-    name: Heater
-    icon: "mdi:temperature-celsius"
-    restore_mode: ALWAYS_OFF
-    pin:
-      number: GPIO0
-      inverted: True
 
 time:
   - platform: sntp
@@ -57,12 +35,7 @@ mqtt:
 
 sensor:
   - platform: wifi_signal
-    name: "Heater WiFi Signal"
-    on_value:
-      then:
-        - output.turn_on: gpio_led
-        - delay: 0.1s
-        - output.turn_off: gpio_led
+    name: "Climate WiFi Signal"
     update_interval: 5s
     expire_after: 120s
     accuracy_decimals: 1
@@ -70,3 +43,25 @@ sensor:
       - sliding_window_moving_average:
           send_every: 6
           window_size: 12
+  - platform: dht
+    model: AM2302
+    pin:
+      number: 2
+      mode: INPUT_PULLUP
+    temperature:
+      name: "Climate Temperature"
+      accuracy_decimals: 2
+      filters:
+        - sliding_window_moving_average:
+            send_every: 6
+            window_size: 12
+        - offset: -2.55
+    humidity:
+      name: "Climate Humidity"
+      accuracy_decimals: 1
+      filters:
+        - sliding_window_moving_average:
+            send_every: 6
+            window_size: 12
+        - offset: 5.2
+    update_interval: 10s

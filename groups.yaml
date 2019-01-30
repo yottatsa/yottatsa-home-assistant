@@ -7,21 +7,26 @@ Home:
     - sensor.living_room_temperature_filtered
     - sensor.living_room_humidity
     - binary_sensor.livingroom_motion_sensor
-    - sensor.bedroom_temperature
+    - sensor.climate_temperature
+    - sensor.bedroom_sensor_temperature
+    - sensor.climate_humidity
     - sensor.bedroom_light_level
     - binary_sensor.bedroom_motion_sensor
-    - sensor.heater
     - timer.alarm_clock
 Devices:
   control: hidden
   entities:
+    - binary_sensor.systemd_service
     - sensor.cpu_thermal_zone_0
     - sensor.disk_use_percent
     - sensor.memory_use_percent
     - sensor.processor_use
-    - sensor.heater_wifi_signal_sensor
+    - sensor.heater
+    - sensor.heater_wifi_signal
+    - sensor.climate_wifi_signal
     - sensor.hp_laserjet_professional_m1212nf_mfp
     - sensor.printed_pages
+    - device_tracker.hue_vladimir_eremins_iphone
 Predictions:
   control: hidden
   entities:

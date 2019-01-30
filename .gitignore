@@ -11,3 +11,5 @@ tts
 __pycache__
 *.swp
 secrets.yaml
+.esphomeyaml
+climate
