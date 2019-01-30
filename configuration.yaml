@@ -45,7 +45,7 @@ conversation:
 recorder:
   purge_interval: 1
   purge_keep_days: 1
-  db_url: sqlite:////var/lib/homeassistant/home-assistant_v2.db
+  db_url: sqlite:////dev/shm/home-assistant_v2.db
   include:
     domains:
       - climate
@@ -132,8 +132,10 @@ sensor:
         friendly_name: 'Temperature'
         value_template: >
           {{ (is_state('timer.alarm_clock', 'active') and
-              states.sensor.climate_temperature.state or
-              states.sensor.living_room_temperature_filtered.state) | float }}
+          states.sensor.climate_temperature.state | float or
+          states.sensor.living_room_temperature_filtered.state | float or
+          states.sensor.living_room_temperature_filtered.state | float
+          )}}
         unit_of_measurement: °C
   - platform: command_line
     name: CPU Thermal Zone 0
@@ -239,13 +241,13 @@ light:
 logger:
   default: warn
   logs:
-    custom_components.device_tracker: debug
     custom_components.binary_sensor.hue: debug
     custom_components.sensor.hue: debug
     urllib3: error
-    homeassistant.components.switch.hdmi_cec: debug
-    homeassistant.components.hdmi_cec: debug
-    pycec: info
+    #custom_components.device_tracker: debug
+    #homeassistant.components.switch.hdmi_cec: debug
+    #homeassistant.components.hdmi_cec: debug
+    #pycec: info
 
 apple_tv:
   - host: 192.168.1.246
@@ -264,6 +266,8 @@ climate:
       minutes: 20
     cold_tolerance: 0.3
     hot_tolerance: 0.2
+    keep_alive:
+      minutes: 1
     precision: 0.1
     initial_operation_mode: auto
 

@@ -22,6 +22,7 @@ Devices:
     - sensor.memory_use_percent
     - sensor.processor_use
     - sensor.heater
+    - binary_sensor.heater_heartbeat
     - sensor.heater_wifi_signal
     - sensor.climate_wifi_signal
     - sensor.hp_laserjet_professional_m1212nf_mfp

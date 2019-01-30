@@ -36,7 +36,7 @@
     service: climate.set_temperature
   - data:
       entity_id: light.nightstand
-      profile: energize
+      profile: reading
       transition: 900
     service: light.turn_on
 - id: '1544639167076'
@@ -72,7 +72,7 @@
   action:
   - data:
       entity_id: climate.heater
-      temperature: 21
+      temperature: 20.5
     service: climate.set_temperature
   - data:
       message: Okaeri!
