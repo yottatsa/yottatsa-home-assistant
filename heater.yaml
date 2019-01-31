@@ -5,7 +5,14 @@ esphomeyaml:
   platform: ESP8266
   board: esp01_1m
 
+globals:
+  - id: heartbeat_timestamp
+    type: int
+    restore_value: yes
+    initial_value: '0'
+
 wifi:
+  reboot_timeout: 10min
   ssid: !secret ssid
   password: !secret wifi_password
   power_save_mode: none
@@ -18,6 +25,7 @@ wifi:
 
 ota:
   password: !secret ota
+  safe_mode: False
 
 logger:
   baud_rate: 115200
@@ -49,11 +57,33 @@ time:
     id: sntp_time
     timezone: Europe/London
 
+interval:
+  - interval: 20min
+    then:
+      - if:
+          condition:
+            binary_sensor.is_off: heartbeat
+          then:
+          - logger.log: "heartbeat: toggling heater."
+          - switch.toggle: heater
+
 mqtt:
+  reboot_timeout: 10min
   broker: 192.168.1.110
   port: 1883
   username: homeassistant
   password: !secret mosquitto
+  on_message:
+    - topic: heater/switch/heater/command
+      then:
+        - lambda: |-
+            auto time = id(sntp_time).now();
+            if (time.is_valid() == true) {
+                id(heartbeat_timestamp) = time.time;
+            }
+        - logger.log:
+            format: "Heartbeat at %d"
+            args: [ 'id(heartbeat_timestamp)' ]
 
 sensor:
   - platform: wifi_signal
@@ -70,3 +100,32 @@ sensor:
       - sliding_window_moving_average:
           send_every: 6
           window_size: 12
+
+binary_sensor:
+  - platform: template
+    id: heartbeat
+    name: "Heater Heartbeat"
+    device_class: connectivity
+    lambda: |-
+      auto time = id(sntp_time).now();
+      if (time.is_valid() != true) return false;
+
+      auto last = id(heartbeat_timestamp);
+      if (last == 0) return false;
+
+      int heartbeat_delta = time.time - last;
+      if (heartbeat_delta > 0 && heartbeat_delta < 900) {
+          return true;
+      } else {
+          return false;
+      }
+    filters:
+      - delayed_off: 300s
+    on_state:
+      then:
+        - if:
+            condition:
+              binary_sensor.is_off: heartbeat
+            then:
+            - logger.log: "heartbeat: switching heater on."
+            - switch.turn_on: heater
