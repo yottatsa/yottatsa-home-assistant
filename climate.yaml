@@ -8,7 +8,7 @@ esphomeyaml:
 wifi:
   ssid: !secret ssid
   password: !secret wifi_password
-  power_save_mode: none
+  power_save_mode: light
   manual_ip:
     static_ip: 192.168.1.237
     subnet: 255.255.255.0
@@ -18,6 +18,7 @@ wifi:
 
 ota:
   password: !secret ota
+  safe_mode: False
 
 logger:
   baud_rate: 115200
@@ -36,7 +37,7 @@ mqtt:
 sensor:
   - platform: wifi_signal
     name: "Climate WiFi Signal"
-    update_interval: 5s
+    update_interval: 10s
     expire_after: 120s
     accuracy_decimals: 1
     filters:
@@ -51,17 +52,18 @@ sensor:
     temperature:
       name: "Climate Temperature"
       accuracy_decimals: 2
+      expire_after: 120s
       filters:
         - sliding_window_moving_average:
-            send_every: 6
-            window_size: 12
-        - offset: -2.55
+            send_every: 3
+            window_size: 6
+        - offset: -1.95
     humidity:
       name: "Climate Humidity"
+      expire_after: 120s
       accuracy_decimals: 1
       filters:
         - sliding_window_moving_average:
-            send_every: 6
-            window_size: 12
-        - offset: 5.2
-    update_interval: 10s
+            send_every: 3
+            window_size: 6
+    update_interval: 20s
