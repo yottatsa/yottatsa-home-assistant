@@ -76,6 +76,7 @@ recorder:
       - sensor.heater
       - sensor.heater_wifi_signal_sensor
       - switch.heater
+      - binary_sensor.rpi_power_status
 
 history:
 
@@ -180,6 +181,7 @@ sensor:
     end: '{{ now() }}'
 
 binary_sensor:
+  - platform: rpi_power
   - platform: sdnotify
   - platform: hue
   - platform: workday

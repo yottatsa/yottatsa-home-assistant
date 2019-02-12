@@ -55,7 +55,7 @@ class Notifier(BinarySensorDevice):
     @Throttle(SCAN_INTERVAL)
     async def async_update(self):
         if self.notifier.socket is not None:
-            self.attributes['last_updated'] = dt_util.now()
+            self.attributes['last_updated'] = str(dt_util.now())
             if not self.ready:
                 self._notify("READY=1")
                 self.ready = True

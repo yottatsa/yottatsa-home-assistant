@@ -1,0 +1,1 @@
+/home/yottatsa/Public/sensor.rpi_power/custom_components/binary_sensor/rpi_power.py
