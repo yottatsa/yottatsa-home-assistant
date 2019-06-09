@@ -6,17 +6,16 @@ Home:
     - sensor.dark_sky_humidity
     - sensor.living_room_temperature_filtered
     - sensor.living_room_humidity
-    - sensor.climate_temperature
     - sensor.bedroom_sensor_temperature
-    - sensor.climate_humidity
-    - sensor.bedroom_light_level
+    - sensor.bedroom_sensor_light_level
+    - sensor.bedroom_speaker_alarm
     - climate.heater
     - timer.alarm_clock
 Security:
   control: hidden
   entities:
     - binary_sensor.livingroom_motion_sensor
-    - binary_sensor.bedroom_motion_sensor
+    - binary_sensor.bedroom_sensor_motion
 Devices:
   control: hidden
   entities:
@@ -32,17 +31,15 @@ Devices:
     - sensor.climate_wifi_signal
     - sensor.hp_laserjet_professional_m1212nf_mfp
     - sensor.printed_pages
-    - device_tracker.hue_vladimir_eremins_iphone
 Predictions:
   control: hidden
   entities:
     - sensor.dark_sky_minutely_summary
-    - sensor.home_to_facebook_london
-    - sensor.home_to_lsbu
     - binary_sensor.workday_sensor
 Presence:
   control: hidden
   icon: mdi:account-multiple
   entities:
     - device_tracker.vladimir_eremins_iphone
+    - device_tracker.hue_vladimir_eremins_iphone
     - device_tracker.hue_keenetic_s

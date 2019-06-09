@@ -1,8 +1,9 @@
 switch_on_apple_tv:
   alias: Switch on the Apple TV
   sequence:
-  - data: {}
-    service: hdmi_cec.power_on
+  - data:
+      entity_id: media_player.hdmi_0
+    service: media_player.turn_on
   - data:
       device: 1.0.0.0
     service: hdmi_cec.select_device

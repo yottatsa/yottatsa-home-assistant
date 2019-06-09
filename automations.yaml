@@ -32,13 +32,18 @@
   action:
   - data:
       entity_id: climate.heater
-      temperature: 21
+      temperature: 22
     service: climate.set_temperature
   - data:
       entity_id: light.nightstand
       profile: reading
       transition: 900
     service: light.turn_on
+  - delay: 900s
+  - data:
+      entity_id: climate.heater
+      temperature: 20
+    service: climate.set_temperature
 - id: '1544639167076'
   alias: Leaving home
   trigger:
@@ -72,8 +77,82 @@
   action:
   - data:
       entity_id: climate.heater
-      temperature: 20.5
+      temperature: 20
     service: climate.set_temperature
   - data:
       message: Okaeri!
     service: notify.ios_vladimir_eremins_iphone
+- id: '1558391222511'
+  alias: Lights for TV
+  trigger:
+  - entity_id: media_player.hdmi_0
+    from: 'on'
+    platform: state
+  condition: []
+  action:
+  - data:
+      entity_id: light.living_room
+      profile: reading
+      transition: 15
+    service: light.turn_on
+  - delay: 00:00:01
+  - data:
+      entity_id: light.living_room
+      profile: reading
+      transition: 14
+    service: light.turn_on
+  - delay: 00:00:01
+  - data:
+      entity_id: light.living_room
+      profile: reading
+      transition: 13
+    service: light.turn_on
+  - delay: 00:00:01
+  - data:
+      entity_id: light.living_room
+      profile: reading
+      transition: 12
+    service: light.turn_on
+  - delay: 00:00:01
+  - data:
+      entity_id: light.living_room
+      profile: reading
+      transition: 11
+    service: light.turn_on
+  - delay: 00:00:01
+  - data:
+      entity_id: light.living_room
+      profile: reading
+      transition: 10
+    service: light.turn_on
+- id: '1560093057776'
+  alias: Google Home Alarm
+  trigger:
+  - entity_id: sensor.bedroom_speaker_alarm
+    from: unavailable
+    platform: state
+  condition:
+  - condition: template
+    value_template: '{{ states.sensor.bedroom_speaker_alarm.state != "unavailable"
+      }}'
+  action:
+  - data:
+      entity_id: switch.alarm_clock
+    service: switch.turn_off
+  - data:
+      entity_id: switch.alarm_clock
+    service: switch.turn_on
+- id: '1560095818967'
+  alias: Google Home Cancel Alarm
+  trigger:
+  - entity_id: sensor.bedroom_speaker_alarm
+    platform: state
+    to: unavailable
+  condition:
+  - condition: state
+    entity_id: sensor.bedroom_speaker_alarm
+    state: unavailable
+  action:
+  - data:
+      entity_id: switch.alarm_clock
+    service: switch.turn_off

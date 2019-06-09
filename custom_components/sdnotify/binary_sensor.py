@@ -20,7 +20,7 @@ def get_scan_interval():
         watchdog_sec = int(watchdog_usec)/1000/1000
         return watchdog_sec / 4
 
-
+DOMAIN = 'sdnotify'
 SCAN_INTERVAL = timedelta(seconds=get_scan_interval() or 5)
 
 

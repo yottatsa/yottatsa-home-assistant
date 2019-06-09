@@ -13,7 +13,14 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   auth_providers:
-  - type: homeassistant
+    - type: homeassistant
+    - type: trusted_networks
+      allow_bypass_login: true
+      trusted_networks:
+        - 127.0.0.1
+        - ::1
+        - 192.168.1.0/24
+        - fe80::/64
 
 zone:
   - name: Facebook London
@@ -22,23 +29,28 @@ zone:
     icon: mdi:facebook-workplace
     radius: 250
 
+system_health:
+
+google_assistant:
+  project_id: home-22391
+  api_key: !secret homegraph
+  exposed_domains:
+    - climate
+    - switch
+  entity_config:
+    switch.heater:
+      expose: False
+
 frontend:
 
 config:
 
 http:
   base_url: https://home.yottatsa.name
-  ssl_key: /etc/letsencrypt/live/home.yottatsa.name/privkey.pem
-  ssl_certificate: /etc/letsencrypt/live/home.yottatsa.name/fullchain.pem
-
-# Checks for available updates
-# Note: This component will send some information about your system to
-# the developers to assist with development of Home Assistant.
-# For more information, please see:
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-# updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  # include_used_components: true
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+    - ::1
 
 conversation:
 
@@ -51,12 +63,12 @@ recorder:
       - climate
       - device_tracker
       - proximity
+      - person
     entities:
       - sensor.dark_sky_temperature
       - sensor.dark_sky_humidity
-      - sensor.bedroom_temperature
       - sensor.bedroom_sensor_temperature
-      - sensor.bedroom_light_level
+      - sensor.bedroom_sensor_light_level
       - sensor.living_room_temperature_filtered
       - sensor.living_room_temperature
       - sensor.living_room_humidity
@@ -64,7 +76,7 @@ recorder:
       - sensor.climate_wifi_signal
       - sensor.climate_temperature
       - sensor.climate_humidity
-      - binary_sensor.bedroom_motion_sensor
+      - binary_sensor.bedroom_sensor_motion
       - binary_sensor.livingroom_motion_sensor
       - sensor.printed_pages
       - sensor.cpu_thermal_zone_0
@@ -77,6 +89,8 @@ recorder:
       - sensor.heater_wifi_signal_sensor
       - switch.heater
       - binary_sensor.rpi_power_status
+      - binary_sensor.heater_heartbeat
+      - sensor.bedroom_speaker_alarm
 
 history:
 
@@ -99,6 +113,12 @@ discovery:
   enable:
 #    - dlna_dmr
 
+googlehome:
+  devices:
+    - host: 192.168.1.220
+      track_alarms: true
+      track_devices: false
+
 sensor:
   - platform: dht
     sensor: AM2302
@@ -117,14 +137,6 @@ sensor:
         radius: 2.0
   - platform: template
     sensors:
-      bedroom_sensor_temperature:
-        friendly_name: 'Bedroom Sensor Temperature'
-        value_template: "{{ state_attr('binary_sensor.bedroom_motion_sensor', 'temperature') }}"
-        unit_of_measurement: °C
-      bedroom_light_level:
-        friendly_name: 'Bedroom Light Level'
-        value_template: "{{ state_attr('binary_sensor.bedroom_motion_sensor', 'lx') }}"
-        unit_of_measurement: lux
       printed_pages:
         friendly_name: 'Printed'
         value_template: "{{ (state_attr('sensor.hp_laserjet_professional_m1212nf_mfp', '1.3.6.1.2.1.43.10.2.1.4.1.1') | int) or None }}"
@@ -141,7 +153,6 @@ sensor:
   - platform: command_line
     name: CPU Thermal Zone 0
     unit_of_measurement: °C
-    alias: cpu_thermal_zone_0
     command: "cat /sys/devices/virtual/thermal/thermal_zone0/temp"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
   - platform: systemmonitor
@@ -150,24 +161,8 @@ sensor:
         arg: /
       - type: memory_use_percent
       - type: processor_use
-  - platform: google_travel_time
-    name: Home to Facebook London
-    api_key: !secret google
-    origin: zone.home
-    destination: zone.facebook_london
-    options:
-      mode: transit
-      transit_routing_preference: fewer_transfers
-  - platform: google_travel_time
-    name: Home to LSBU
-    api_key: !secret google
-    origin: zone.home
-    destination: "103 Borough Road, London SE1 0AA"
-    options:
-      mode: transit
-      transit_routing_preference: fewer_transfers
   - platform: darksky
-    api_key: !secret api_key
+    api_key: !secret darksky_api_key
     monitored_conditions:
       - temperature
       - humidity
@@ -183,7 +178,6 @@ sensor:
 binary_sensor:
   - platform: rpi_power
   - platform: sdnotify
-  - platform: hue
   - platform: workday
     country: UK
     workdays: [mon, tue, wed, thu, fri]
@@ -193,7 +187,7 @@ switch:
     switches:
       tv:
         friendly_name: "TV"
-        value_template: "{{ is_state('switch.hdmi_0', 'on') }}"
+        value_template: "{{ is_state('media_player.hdmi_0', 'on') }}"
         turn_on:
           service: script.switch_on_apple_tv
         turn_off:
@@ -203,21 +197,21 @@ switch:
         value_template: "{{ is_state('timer.alarm_clock', 'active') }}"
         turn_on:
           service: timer.start
-          data:
+          data_template:
             entity_id: timer.alarm_clock
+            duration: >
+                   {{ states.sensor.bedroom_speaker_alarm.state == "unavailable" and "07:30:00" or
+                      ((strptime(states.sensor.bedroom_speaker_alarm.state.replace("+00:00",".0Z"), "%Y-%m-%dT%H:%M:%S.%fZ") - utcnow().replace(tzinfo=None)).total_seconds() | int - 900) }}
         turn_off:
           service: timer.cancel
           data:
             entity_id: timer.alarm_clock
 
-nipca:
-
-tts:
-  - platform: google
+#nipca:
 
 # cloud:
 
-zeroconf:
+# zeroconf:
 
 ios:
 
@@ -225,16 +219,45 @@ homekit:
   filter:
     include_entities:
       - sensor.living_room_humidity
-      - switch.tv
       - climate.heater
       - switch.alarm_clock
-      - sensor.climate_temperature
+      - media_player.tv
+
+#input_select:
+#  tv_inputs:
+#    name: TV Inputs
+#    options:
+#      - Apple TV
+#      - Pi HDMI2
+#    initial: Apple TV
+#    icon: mdi:television
 
 media_player:
-#  - platform: philips_js
-#    host: 192.168.1.6
-#    turn_on_action:
-#      service: script.switch_on_apple_tv
+  - platform: philips_js
+    host: 192.168.1.6
+    api_version: 6
+    turn_on_action:
+      service: media_player.turn_on
+      data:
+        entity_id: media_player.hdmi_0
+  - platform: universal
+    name: TV
+    children:
+      - media_player.philips_tv
+      - media_player.hdmi_0
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        data:
+          entity_id: media_player.hdmi_0
+#      turn_on:
+#        service: script.switch_on_apple_tv
+      turn_off:
+        service: hdmi_cec.standby
+    attributes:
+      state: media_player.hdmi_0
+#      source: input_select.tv_inputs
+#      source_list: input_select.tv_inputs|options
 
 light:
 #  - platform: ambilights
@@ -243,31 +266,28 @@ light:
 logger:
   default: warn
   logs:
-    custom_components.binary_sensor.hue: debug
-    custom_components.sensor.hue: debug
     urllib3: error
-    #custom_components.device_tracker: debug
     #homeassistant.components.switch.hdmi_cec: debug
     #homeassistant.components.hdmi_cec: debug
     #pycec: info
 
-apple_tv:
-  - host: 192.168.1.246
-    login_id: !secret pyatv_loginid
-    credentials: !secret pyatv_credentials
+#apple_tv:
+#  - host: 192.168.1.246
+#    login_id: !secret pyatv_loginid
+#    credentials: !secret pyatv_credentials
 
 climate:
   - platform: generic_thermostat
     name: Heater
     heater: switch.heater
     target_sensor: sensor.temperature
-    min_temp: 15
-    max_temp: 25
+    min_temp: 18
+    max_temp: 23
     ac_mode: False
     min_cycle_duration: 
-      minutes: 20
+      minutes: 10
     cold_tolerance: 0.3
-    hot_tolerance: 0.2
+    hot_tolerance: 0.1
     keep_alive:
       minutes: 1
     precision: 0.1
@@ -275,27 +295,42 @@ climate:
 
 hdmi_cec:
   osd_name: raspberry
+  platform: media_player
   devices:
     Philips TV: 0.0.0.0
     Apple TV: 1.0.0.0
     Pi: 2.0.0.0
 
 device_tracker:
-  - platform: hue
+#  - platform: ee_brightbox
+#    password: !secret ee
+#    interval_seconds: 120
+  - platform: huesensor
     interval_seconds: 60
 
 proximity:
   home:
     zone: home
     devices:
-      - device_tracker.vladimir_eremins_iphone
-      - device_tracker.hue_keenetic_s
+      - person.vladimir
+      - person.evgenii
     tolerance: 50
   facebook_london:
     zone: facebook_london
     devices:
-      - device_tracker.vladimir_eremins_iphone
+      - person.vladimir
     tolerance: 50
+
+person:
+  - name: Vladimir
+    id: yottatsa
+    device_trackers:
+      - device_tracker.vladimir_eremins_iphone
+      - device_tracker.hue_vladimir_eremins_iphone
+  - name: Evgenii
+    id: judgin06
+    device_trackers:
+      - device_tracker.hue_keenetic_s
 
 #device_sun_light_trigger:
 #  light_group: group.all_lights
