@@ -1,6 +1,4 @@
 esphomeyaml:
-  esphomelib_version:
-    branch: dev
   name: climate
   platform: ESP8266
   board: esp01_1m
@@ -8,7 +6,7 @@ esphomeyaml:
 wifi:
   ssid: !secret ssid
   password: !secret wifi_password
-  power_save_mode: light
+  power_save_mode: none
   manual_ip:
     static_ip: 192.168.1.237
     subnet: 255.255.255.0
@@ -45,7 +43,7 @@ sensor:
           send_every: 6
           window_size: 12
   - platform: dht
-    model: AM2302
+    model: DHT22
     pin:
       number: 2
       mode: INPUT_PULLUP
@@ -57,7 +55,7 @@ sensor:
         - sliding_window_moving_average:
             send_every: 3
             window_size: 6
-        - offset: -1.95
+        - offset: -6.2
     humidity:
       name: "Climate Humidity"
       expire_after: 120s
@@ -66,4 +64,5 @@ sensor:
         - sliding_window_moving_average:
             send_every: 3
             window_size: 6
+        - offset: 9
     update_interval: 20s

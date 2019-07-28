@@ -1,21 +1,16 @@
-vladimir_eremins_iphone:
-  hide_if_away: false
-  icon:
-  name: Vladimir Eremin’s iPhone
-  gravatar: me@yottatsa.name
-  track: true
 
 hue_vladimir_eremins_iphone:
   hide_if_away: false
   icon:
+  mac:
   name: Vladimir Eremin’s iPhone
-  gravatar: me@yottatsa.name
   picture:
   track: true
 
 hue_keenetic_s:
   hide_if_away: false
   icon:
+  mac:
   name: Keenetic-S
   picture:
   track: true

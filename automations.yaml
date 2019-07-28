@@ -39,11 +39,6 @@
       profile: reading
       transition: 900
     service: light.turn_on
-  - delay: 900s
-  - data:
-      entity_id: climate.heater
-      temperature: 20
-    service: climate.set_temperature
 - id: '1544639167076'
   alias: Leaving home
   trigger:
@@ -51,10 +46,7 @@
     from: home
     platform: state
     to: not_home
-  condition:
-  - after: 08:00:00
-    before: 00:30:00
-    condition: time
+  condition: []
   action:
   - data:
       entity_id: climate.heater
@@ -63,6 +55,9 @@
   - data:
       message: Itterasshai!
     service: notify.ios_vladimir_eremins_iphone
+  - data:
+      entity_id: switch.20820045bcddc2272725
+    service: switch.turn_off
 - id: '1544645154540'
   alias: Coming home
   trigger:
@@ -156,3 +151,28 @@
   - data:
       entity_id: switch.alarm_clock
     service: switch.turn_off
+- id: '1560863627264'
+  alias: Heat shot
+  trigger:
+  - above: 21.9
+    entity_id: climate.heater
+    value_template: '{{ state.attributes.temperature }}'
+    platform: numeric_state
+  condition: []
+  action:
+  - delay: 00:30:00
+  - data:
+      entity_id: climate.heater
+      temperature: 20
+    service: climate.set_temperature
+- id: '1563839668700'
+  alias: Soundbar Volume
+  trigger:
+  - event_data: {}
+    event_type: ir_command_received
+    platform: event
+  condition: []
+  action:
+  - service: shell_command.send_jvc_command
+    data_template:
+      button: '{{ trigger.event.data["button_name"] }}'
